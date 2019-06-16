@@ -1,11 +1,10 @@
 \documentclass{beamer}
-%\usetheme[numbering=none,nofirafonts]{gitcourse}
 \usetheme{metropolis}
 
 \definecolor{main}{RGB}{92, 138, 168}
 \definecolor{background}{RGB}{240, 247, 255}
 
-\usepackage{sourcecodepro}
+%\usepackage{sourcecodepro}
 %\usepackage[osf]{mathpazo}
 
 \usepackage{booktabs}
@@ -18,9 +17,12 @@
 \usepackage{cancel}
 \usepackage{braket}
 \usepackage{listings}
+\usepackage{ragged2e}
 
 \newcommand{\git}{Git{}}
 \newcommand{\cd}[1]{\texttt{#1}}
+
+\apptocmd{\frame}{}{\justifying}{}
 
 \title{\git, GitHub and GitFlow}
 \author{Jacopo Schiavon}
@@ -44,6 +46,7 @@
     
     \begin{block}{History of \git}
         \begin{itemize}
+        \justifying
             \item Created in 2005 by Linus Torvald (now maintained by Junio Hamano)
             \item Its original purpose was helping developing the Linux kernel
             \item It is designated for coordinating the work of many developer on the same project
@@ -56,8 +59,9 @@
     \git{} is used to manage projects consisting of \alert{text files}: \cd{R} or \cd{Python} packages and scripts; \LaTeX{} documents; repositories of text files (\textit{i.e.} configs for servers or desktops).
     
     Its most advanced features are useful when cooperating in a team of developers.
-    \begin{block}{Why \git{} for small project?}
+    \begin{block}{Why \git{} also for small project?}
         \begin{itemize}
+        \justifying
             \item It teaches \alert{good practices} in code developing and maintaining
             \item It greatly simplify \alert{versioning} 
             \item It rationalize the management of new or experimental features
@@ -69,20 +73,22 @@
 
 \begin{frame}{\git{} features}
     \begin{itemize}
+    \justifying
         \item \alert{Branching} \git{} main feature, will have an entirely dedicated slide.
         \item \alert{Small and Fast} All \git{} procedures (and \git{} itself) are fast and minimal: one or two commands to do everything. Committing and pushing requires no more than a couple of seconds $\Rightarrow$ almost no impact on the workflow.
         \item \alert{Entire history of the repository} \git{} keeps all versions of all files that it is tracking. Allows you to check differences between every two versions (or reverting to any version) of your code.
-        \item \alert{Distribution} \git{} structure implies that each developer works on its own (\textit{forked}) version of a central repository, without breaking or interfering with the work of others developers.
+        \item \alert{Distribution} \git{} structure implies that each developer works on its own (\emph{forked}) version of a central repository, without breaking or interfering with the work of others developers.
         \item \alert{Cryptographic assurance} Every bit that \git{} tracks is authenticated by advanced cryptographic techniques.
     \end{itemize}
 \end{frame}
 
 \begin{frame}{\git{} features: Branching}
     \begin{itemize}
-    \item Main idea: possibility to \alert{work in parallel} on the same code. 
-    \item Useful also when working alone: possibility of \alert{testing different features} without creating copies. 
-    \item A \alert{branch} is a new line of history of the code, completely independent from the rest
-    \item \git{} allows to \alert{create}, \alert{switch} and \alert{merge} different branches with minimal effort (one command for each operation).
+    \justifying
+        \item Main idea: possibility to \alert{work in parallel} on the same code. 
+        \item Useful also when working alone: possibility of \alert{testing different features} without creating copies. 
+        \item A \alert{branch} is a new line of history of the code, completely independent from the rest
+        \item \git{} allows to \alert{create}, \alert{switch} and \alert{merge} different branches with minimal effort (one command for each operation).
     \end{itemize}
 
     \begin{figure}
@@ -94,6 +100,7 @@
 \begin{frame}{\git{} features: Branching}
     \begin{block}{Examples of use cases for small projects}
         \begin{itemize}
+        \justifying
             \item Try a different implementation of a function not knowing if it will work better
             \item Try to rewrite a paragraph or chapter, not knowing if it will come out better
             \item Keep version of a document in another language
@@ -103,9 +110,10 @@
 \end{frame}
 
 \begin{frame}{How to use it in practice? [UNIX systems]}
-    UNIX systems are mainly MacOS or GNU/Linux (but also FreeBSD). Usually \git{} is already installed in your system
+    UNIX systems are mainly MacOS or GNU/Linux (but also FreeBSD). Usually \git{} is already installed in your system. If not, you can use your package manager on GNU/Linux (\emph{i. e.} \cd{apt install git} on Debian and derivatives), on MacOS you can use the git installer from sourceforge\footnote{\url{http://sourceforge.net/projects/git-osx-installer/}}
     \begin{block}{To create a \git{} repository:}
         \begin{itemize}
+        \justifying
             \item Create the folder that you want to track with \git{} (or use one already in use)
             \item Open a terminal emulator and move to the location of the folder
             \item Give the command \cd{git init}
@@ -117,12 +125,22 @@
 \begin{frame}{How to use it in practice? [Windows]}
     Usually \git{} is not installed. 
     \begin{itemize}
+    \justifying
         \item Download the windows installer from \url{https://git-scm.com/} and execute it.
         \item Follow the procedure for installation, installing the Git Bash.
-        \item Now, clicking with the right button on a folder will allow you to open a Git Bash window, which will work exactly as a UNIX terminal.
+        \item Now, clicking with the right button on a folder will allow you to open a Git Bash window, which will then allow you to work exactly as in a UNIX terminal (see previous slide).
     \end{itemize}
-    
 \end{frame}
+
+\begin{frame}{How to use it in practice?}
+    Once we have \git{} installed and a repository initiated, we start tracking the files we are interested in by issuing the two command 
+    \begin{flushleft}
+        \cd{git add \textit{File1} \textit{File2} \textit{\dots}}\\
+        \cd{git commit -m \textit{"First commit message"}}
+    \end{flushleft}
+    that tells \git{} to follow the files \textit{File1}, then create the first commit. From this point onward, \git{} will track every change to the files it is tracking, allowing us to commit when we reach specific point in the history of the code.
+\end{frame}
+
 
 \section{Introduction to GitHub}
 \begin{frame}{Frame Title}
@@ -141,13 +159,13 @@
         \toprule
         \alert{Command}	&	\alert{Meaning}\\
         \midrule
-        \texttt{git init}	&	Initiate a local repository in the folder\\
-        \texttt{git status}	&	Shows the status of the file in the repository (new, modified, already stashed)\\
-        \texttt{git add [\textit{file}]}	&	Add \texttt{\textit{file}} to the staging area\\
-        \texttt{git commit -m "\textit{msg}"} & Record a permanent snapshot of the staged files with an associated message \textit{msg}\\
-        \texttt{git log}	&	Shows the history of commits for the current branch\\
-        \texttt{git log -{}-pretty=oneline}	&	Shows a compressed version of the log\\
-        \texttt{git diff}	&	Shows not yet staged differences\\
+        \cd{git init}	&	Initiate a local repository in the folder\\
+        \cd{git status}	&	Shows the status of the file in the repository (new, modified, already stashed)\\
+        \cd{git add [\textit{file}]}	&	Add \cd{\textit{file}} to the staging area\\
+        \cd{git commit -m "\textit{msg}"} & Record a permanent snapshot of the staged files with an associated message \textit{msg}\\
+        \cd{git log}	&	Shows the history of commits for the current branch\\
+        \cd{git log -{}-pretty=oneline}	&	Shows a compressed version of the log\\
+        \cd{git diff}	&	Shows not yet staged differences\\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -161,10 +179,10 @@
         \toprule
         \alert{Command}	&	\alert{Meaning}\\
         \midrule
-        \texttt{git branch}	&	List all branches\\
-        \texttt{git branch [\textit{name}]}	&	Create a branch named \textit{name}\\
-        \texttt{git checkout [\textit{name}]}	&	Switch to the branch named \textit{name}\\
-        \texttt{git merge [\textit{name}]}	&	Combines the branch named \textit{name} with the current branch\\
+        \cd{git branch}	&	List all branches\\
+        \cd{git branch [\textit{name}]}	&	Create a branch named \textit{name}\\
+        \cd{git checkout [\textit{name}]}	&	Switch to the branch named \textit{name}\\
+        \cd{git merge [\textit{name}]}	&	Combines the branch named \textit{name} with the current branch\\
         \bottomrule
         \end{tabular}
     \end{table}
@@ -178,10 +196,10 @@
         \toprule
         \alert{Command}	&	\alert{Meaning}\\
         \midrule
-        \texttt{git clone \textit{url}}	&	Download an online repository to your local filesystem\\
-        \texttt{git pull}	&	Download and integrate the online changes to the repository\\
-        \texttt{git fetch}	&	Download all the remote repository history\\
-        \texttt{git push [\textit{alias}] [\textit{branch}]}	& Pushes the local commits in the current branch to the \textit{branch} of online repository named \textit{alias}\\
+        \cd{git clone \textit{url}}	&	Download an online repository to your local filesystem\\
+        \cd{git pull}	&	Download and integrate the online changes to the repository\\
+        \cd{git fetch}	&	Download all the remote repository history\\
+        \cd{git push [\textit{alias}] [\textit{branch}]}	& Pushes the local commits in the current branch to the \textit{branch} of online repository named \textit{alias}\\
         \bottomrule
         \end{tabular}
 \end{table}

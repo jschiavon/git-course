@@ -1,0 +1,30 @@
+mkdir example_repository
+cd example_repository
+touch file_prova.R
+
+git init
+git status
+
+git add file_prova.R
+git commit -m "first commit"
+git status
+
+nano file_prova.R
+
+"Work
+Work
+
+...
+
+Lot of work
+
+...
+
+Work"
+
+git status
+
+git add file_prova.R
+git commit -m "lot of work done"
+
+git log --pretty=oneline
